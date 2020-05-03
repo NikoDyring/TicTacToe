@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,11 +16,20 @@ namespace Assets.Scripts.TicTacToe
         public TextMeshProUGUI statusMessage;
         public TextMeshProUGUI restartMessage;
 
+        // This code is hacky but dont wanna spend time in unity to  implement this.
+        private bool gameStart = false;
 
         Node[,] grid = new Node[3, 3];
 
         void Update()
         {
+            if (!gameStart)
+            {
+                grid[0,0] = new Node(){player = 2, x=0,y=0};
+                Instantiate(oPrefab, new Vector3(0, 0, 0), Quaternion.Euler(90, 0, 0));
+                gameStart = true;
+            }
+
             if (!IsGameOver())
             {
                 if (Input.GetKeyDown("z") && IsValidMove(0, 0))
@@ -31,7 +41,8 @@ namespace Assets.Scripts.TicTacToe
                     grid[node.x, node.y] = node; //Inserting this Node into the grid
                     CallMinimax(0, 1);
 
-                    Node best = ReturnBestMove();
+                    //Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -49,7 +60,8 @@ namespace Assets.Scripts.TicTacToe
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
 
-                    Node best = ReturnBestMove();
+                    //Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -65,8 +77,8 @@ namespace Assets.Scripts.TicTacToe
                     Node node = new Node {x = 0, y = 2, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-
-                    Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
+                    //Node best = ReturnBestMove();
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -75,14 +87,15 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Keypad2) && IsValidMove(1, 0))
+                if (Input.GetKeyDown(KeyCode.X) && IsValidMove(1, 0))
                 {
                     Instantiate(xPrefab, new Vector3(1, 0, 0), Quaternion.Euler(90, 0, 0));
                     //When the user adds a new 'X' to the grid, a node with those coordinates is added to the list of nodes
                     Node node = new Node {x = 1, y = 0, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-                    Node best = ReturnBestMove();
+                    //Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -91,14 +104,15 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Keypad5) && IsValidMove(1, 1))
+                if (Input.GetKeyDown(KeyCode.S) && IsValidMove(1, 1))
                 {
                     Instantiate(xPrefab, new Vector3(1, 1, 0), Quaternion.Euler(90, 0, 0));
                     //When the user adds a new 'X' to the grid, a node with those coordinates is added to the list of nodes
                     Node node = new Node {x = 1, y = 1, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-                    Node best = ReturnBestMove();
+                    //Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -107,14 +121,15 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Keypad8) && IsValidMove(1, 2))
+                if (Input.GetKeyDown(KeyCode.W) && IsValidMove(1, 2))
                 {
                     Instantiate(xPrefab, new Vector3(1, 2, 0), Quaternion.Euler(90, 0, 0));
                     //When the user adds a new 'X' to the grid, a node with those coordinates is added to the list of nodes
                     Node node = new Node {x = 1, y = 2, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-                    Node best = ReturnBestMove();
+                    //Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -123,7 +138,7 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Keypad3) && IsValidMove(2, 0))
+                if (Input.GetKeyDown(KeyCode.C) && IsValidMove(2, 0))
                 {
                     Instantiate(xPrefab, new Vector3(2, 0, 0), Quaternion.Euler(90, 0, 0));
                     
@@ -131,7 +146,8 @@ namespace Assets.Scripts.TicTacToe
                     Node node = new Node {x = 2, y = 0, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-                    Node best = ReturnBestMove();
+                    // Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 1), Quaternion.identity);
@@ -140,14 +156,15 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Keypad6) && IsValidMove(2, 1))
+                if (Input.GetKeyDown(KeyCode.D) && IsValidMove(2, 1))
                 {
                     Instantiate(xPrefab, new Vector3(2, 1, 0), Quaternion.Euler(90, 0, 0));
                     //When the user adds a new 'X' to the grid, a node with those coordinates is added to the list of nodes
                     Node node = new Node {x = 2, y = 1, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-                    Node best = ReturnBestMove();
+                    // Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -157,7 +174,7 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
 
-                if (Input.GetKeyDown(KeyCode.Keypad9) && IsValidMove(2, 2))
+                if (Input.GetKeyDown(KeyCode.E) && IsValidMove(2, 2))
                 {
                     Instantiate(xPrefab, new Vector3(2, 2, 0), Quaternion.Euler(90, 0, 0));
                     
@@ -165,7 +182,8 @@ namespace Assets.Scripts.TicTacToe
                     Node node = new Node {x = 2, y = 2, player = 1};
                     grid[node.x, node.y] = node;
                     CallMinimax(0, 1);
-                    Node best = ReturnBestMove();
+                    //Node best = ReturnBestMove();
+                    Node best = MinMax.FindBestMove(grid);
                     if (IsValidMove(best.x, best.y))
                     {
                         Instantiate(oPrefab, new Vector3(best.x, best.y, 0), Quaternion.identity);
@@ -378,6 +396,7 @@ namespace Assets.Scripts.TicTacToe
 
                     int currentScore = Minimax(depth + 1, 2);
                     scores.Add(currentScore);
+                    
 
                     if (depth == 0)
                     {
@@ -385,6 +404,7 @@ namespace Assets.Scripts.TicTacToe
                         m.point = point;
                         m.score = currentScore;
                         rootsChildrenScores.Add(m);
+                        Debug.Log((m.score));
                     }
 
                 }

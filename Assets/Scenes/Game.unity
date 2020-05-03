@@ -645,6 +645,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 606806489}
   m_CullTransparentMesh: 0
+--- !u!1 &671924995 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 725781684611391014, guid: 070fcf56412276746a54787023cfdd79,
+    type: 3}
+  m_PrefabInstance: {fileID: 725781684841061004}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &671924996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 671924995}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0544cad792a010f459c5f5b841f87c6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xPrefab: {fileID: 160610, guid: 680b5890e65c74b4bb4990c4f16852f5, type: 3}
+  oPrefab: {fileID: 199254, guid: 0627b08a4e0f3a14f948b7be80c41649, type: 3}
+  statusMessage: {fileID: 2052291407}
+  restartMessage: {fileID: 606806491}
 --- !u!1 &723670325
 GameObject:
   m_ObjectHideFlags: 0
@@ -1298,5 +1320,6 @@ PrefabInstance:
       propertyPath: restartMessage
       value: 
       objectReference: {fileID: 606806491}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 725781684611391015, guid: 070fcf56412276746a54787023cfdd79, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 070fcf56412276746a54787023cfdd79, type: 3}
