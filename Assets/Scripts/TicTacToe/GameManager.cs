@@ -404,7 +404,6 @@ namespace Assets.Scripts.TicTacToe
                         m.point = point;
                         m.score = currentScore;
                         rootsChildrenScores.Add(m);
-                        Debug.Log((m.score));
                     }
 
                 }

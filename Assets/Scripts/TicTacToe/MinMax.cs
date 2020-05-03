@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 namespace Assets.Scripts.TicTacToe
@@ -13,10 +11,8 @@ namespace Assets.Scripts.TicTacToe
         /// though beware there are errors in that code so it cant be used copy-paste style.
         /// ive fixed some of the errors, the AI is mostly unbeatable but in some fringe cases it makes odd choices.
         /// </summary>
-
-
-
         static char player = 'x', opponent = 'o';
+        private static int[,] results = new int[3,3];
         static Boolean isMovesLeft(char[,] board)
         {
             for (int i = 0; i < 3; i++)
@@ -74,7 +70,7 @@ namespace Assets.Scripts.TicTacToe
             // Else if none of them have won then return 0 
             return 0;
         }
-        static int minimax(char[,] board, int depth, Boolean isMax)
+        static int minimax(char[,] board, int depth, Boolean isMax, int alpha, int beta)
         {
             int score = evaluate(board);
 
@@ -112,10 +108,15 @@ namespace Assets.Scripts.TicTacToe
                             // Call minimax recursively and choose 
                             // the maximum value 
                             best = Math.Max(best, minimax(board,
-                                            depth + 1, false));
-
+                                            depth + 1, false,alpha,beta));
+                            alpha = Math.Max(alpha, best);
                             // Undo the move 
                             board[i, j] = '_';
+
+                            if (beta <= alpha)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -141,10 +142,15 @@ namespace Assets.Scripts.TicTacToe
                             // Call minimax recursively and choose 
                             // the minimum value 
                             best = Math.Min(best, minimax(board,
-                                            depth + 1, true));
-
+                                            depth + 1, true, alpha,beta));
+                            beta = Math.Min(beta, best);
+                            
                             // Undo the move 
                             board[i, j] = '_';
+                            if (beta <= alpha)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -176,7 +182,7 @@ namespace Assets.Scripts.TicTacToe
 
                         // compute evaluation function for this 
                         // move. 
-                        int moveVal = minimax(board, 0, false);
+                        int moveVal = minimax(board, 0, false,Int32.MinValue, Int32.MaxValue);
 
                         // Undo the move 
                         board[i, j] = '_';
@@ -184,6 +190,7 @@ namespace Assets.Scripts.TicTacToe
                         // If the value of the current move is 
                         // more than the best value, then update 
                         // best/ 
+                        results[i, j] = moveVal;
                         if (moveVal > bestVal)
                         {
                             bestMove.x = i;
@@ -193,8 +200,11 @@ namespace Assets.Scripts.TicTacToe
                     }
                 }
             }
+            Debug.Log($"l1 :{results[0,2]},{results[1, 2]},{results[2, 2]} \n" + 
+                      $"l2: {results[0, 1]},{results[1, 1]},{results[2, 1]} \n" +
+                      $"l3: {results[0, 0]},{results[1, 0]},{results[2, 0]}");
 
-            UnityEngine.Debug.Log($"The value of the best Move is : {bestVal}");
+            Debug.Log($"The value of the best Move is : {bestVal} x: {bestMove.x} y: {bestMove.y} ");
 
             return bestMove;
         }
