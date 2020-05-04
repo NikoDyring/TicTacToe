@@ -9,8 +9,8 @@
   * One for the main menu (MainMenu)
   
 Feel free to light up Unity and import the project if needed. If you want to test it out in the browser, head over to http://zakeovich.dk/games/tictactoe/index.html
-
-**Group Members**
+  
+**Group Members**  
 Nikolai Christiansen  
 Nikolaj Dyring  
-Mikkel Ertbjerg  
+Mikkel Ertbjerg
