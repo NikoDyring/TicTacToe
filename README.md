@@ -7,6 +7,7 @@
 * Inside the scripts folder we've diviced our scripts up in 2.
   * One for the game (TicTacToe)
   * One for the main menu (MainMenu)
+  
 Feel free to light up Unity and import the project if needed. If you want to test it out in the browser, head over to http://zakeovich.dk/games/tictactoe/index.html
 
 **Group Members**
